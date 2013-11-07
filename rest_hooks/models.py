@@ -16,7 +16,6 @@ except ImportError:
         except ImportError:
             raise ImportError('JSON library needed')
 
-
 from rest_hooks.utils import get_module, find_and_fire_hook, distill_model_event
 
 from rest_hooks import signals
