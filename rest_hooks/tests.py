@@ -11,6 +11,7 @@ from django.contrib.sites.models import Site
 from django.test import TestCase
 from django.utils import simplejson as json
 
+from rest_hooks.utils import find_and_fire_hook
 from rest_hooks import models
 Hook = models.Hook
 
@@ -61,8 +62,8 @@ class RESTHooksTest(TestCase):
     #############
 
     def test_no_user_property_fail(self):
-        self.assertRaises(models.find_and_fire_hook, args=('some.fake.event', self.user))
-        self.assertRaises(models.find_and_fire_hook, args=('special.thing', self.user))
+        self.assertRaises(find_and_fire_hook, args=('some.fake.event', self.user))
+        self.assertRaises(find_and_fire_hook, args=('special.thing', self.user))
 
     def test_no_hook(self):
         comment = Comment.objects.create(
