@@ -3,7 +3,18 @@ import requests
 from django.conf import settings
 from django.core import serializers, exceptions
 from django.db import models
-from django.utils import simplejson as json
+
+# json fallbacks as simplejson bundled in django.utils is deprecated
+try:
+    from django.utils import simplejson as json
+except ImportError:
+    try:
+        import simplejson as json
+    except ImportError:
+        try:
+            import json
+        except ImportError:
+            raise ImportError('JSON library needed')
 
 from rest_hooks.utils import get_module, find_and_fire_hook, distill_model_event
 
