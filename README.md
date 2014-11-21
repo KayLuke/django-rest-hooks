@@ -119,7 +119,7 @@ class Book(models.Model):
         hook_event.send(
             sender=self.__class__,
             event_name='book.read',
-            obj=self, # the Book object
+            obj=self # the Book object
         )
 ```
 
