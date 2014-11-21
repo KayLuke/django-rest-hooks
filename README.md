@@ -88,6 +88,9 @@ class Book(models.Model):
     user = models.ForeignKey('auth.User')
     # maybe user is off a related object, so try...
     # user = property(lambda self: self.intermediary.user)
+    
+    # Added:
+    # hook_users = property that will return a list of users
 
     title = models.CharField(max_length=128)
     pages = models.PositiveIntegerField()
@@ -116,8 +119,11 @@ class Book(models.Model):
         hook_event.send(
             sender=self.__class__,
             event_name='book.read',
-            obj=self # the Book object
+            obj=self, # the Book object
+            user_override = list(), # List of users to override other user options
         )
+        
+    def 
 ```
 
 For the simplest experience, you'll just piggyback off the standard ORM which will
