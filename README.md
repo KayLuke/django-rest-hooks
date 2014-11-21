@@ -120,7 +120,6 @@ class Book(models.Model):
             sender=self.__class__,
             event_name='book.read',
             obj=self, # the Book object
-            user_override = list(), # List of users to override other user options
         )
 ```
 
