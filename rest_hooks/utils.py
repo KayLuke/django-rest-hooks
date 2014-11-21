@@ -30,15 +30,25 @@ def find_and_fire_hook(event_name, instance, user_override=None):
     from django.contrib.auth.models import User
     from rest_hooks.models import Hook, HOOK_EVENTS
 
+    # specified user(s) to notify
     if user_override:
-        user = user_override
+        users = user_override if isinstance(user_override, list) else [user_override]
+
+    # has relationship with user table
     elif hasattr(instance, 'user'):
-        user = instance.user
+        users = [instance.user]
+
+    # exposed property to tell us which users should be notified
+    elif hasattr(instance, 'hook_users'):
+        users = instance.hook_users
+
+    # is a user object itself
     elif isinstance(instance, User):
-        user = instance
+        users = [instance]
+
     else:
         raise Exception(
-            '{} has no `user` property. REST Hooks needs this.'.format(repr(instance))
+            '{} has no `user` or `hook_users` property. REST Hooks needs this.'.format(repr(instance))
         )
 
     if not event_name in HOOK_EVENTS.keys():
@@ -46,7 +56,7 @@ def find_and_fire_hook(event_name, instance, user_override=None):
             '"{}" does not exist in `settings.HOOK_EVENTS`.'.format(event_name)
         )
 
-    hooks = Hook.objects.filter(user=user, event=event_name)
+    hooks = Hook.objects.filter(user__in=users, event=event_name)
     for hook in hooks:
         hook.deliver_hook(instance)
 
