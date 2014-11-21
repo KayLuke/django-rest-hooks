@@ -122,8 +122,6 @@ class Book(models.Model):
             obj=self, # the Book object
             user_override = list(), # List of users to override other user options
         )
-        
-    def 
 ```
 
 For the simplest experience, you'll just piggyback off the standard ORM which will
