@@ -1,3 +1,4 @@
--e git+git@github.com:meric/django-contrib-comments.git@0a4aa7278decb5c388b02f01f11b1512562852bf#egg=django_comments
+Django==1.8
+-e git+git@github.com:django/django-contrib-comments.git@07affdeed8bfce34761c6611573fe6ccce2c9f61#egg=django_contrib_comments-origin/HEAD
 requests==1.2.3
 mock==1.0.1
